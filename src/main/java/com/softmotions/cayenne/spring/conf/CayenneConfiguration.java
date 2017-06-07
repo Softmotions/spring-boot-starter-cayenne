@@ -16,6 +16,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Primary;
@@ -31,6 +32,7 @@ import com.softmotions.cayenne.utils.ExtBaseContext;
 @SpringBootConfiguration
 @ComponentScan("com.softmotions.cayenne.spring")
 @AutoConfigureAfter(DataSourceAutoConfiguration.class)
+@EnableConfigurationProperties(CayenneProperties.class)
 @ConditionalOnClass({ServerRuntime.class})
 @ConditionalOnProperty(prefix = "spring.cayenne", name = "config")
 public class CayenneConfiguration {
