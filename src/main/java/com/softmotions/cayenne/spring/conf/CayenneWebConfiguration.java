@@ -26,7 +26,7 @@ public class CayenneWebConfiguration {
     private static final Logger log = LoggerFactory.getLogger(CayenneWebConfiguration.class);
 
     @Bean
-    ServletRequestListener servletRequestListener() {
+    ServletRequestListener cayenneServletRequestListener() {
         log.info("ServletRequestListener instantiated");
         return new ServletRequestListener() {
 

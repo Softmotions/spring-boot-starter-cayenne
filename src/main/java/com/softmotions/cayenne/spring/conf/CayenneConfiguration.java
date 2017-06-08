@@ -78,7 +78,7 @@ public class CayenneConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public FactoryBean<ObjectContext> objectContext(CayenneRuntime cayenneRuntime) {
+    public FactoryBean<ObjectContext> cayenneObjectContext(CayenneRuntime cayenneRuntime) {
         return new FactoryBean<ObjectContext>() {
 
             @Override
