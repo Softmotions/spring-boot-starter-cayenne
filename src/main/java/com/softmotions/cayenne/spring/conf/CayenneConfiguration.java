@@ -1,13 +1,18 @@
 package com.softmotions.cayenne.spring.conf;
 
+import java.util.List;
 import javax.sql.DataSource;
 
 import org.apache.cayenne.ObjectContext;
 import org.apache.cayenne.configuration.CayenneRuntime;
 import org.apache.cayenne.configuration.server.ServerRuntime;
+import org.apache.cayenne.configuration.server.ServerRuntimeBuilder;
+import org.apache.cayenne.di.Module;
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.FactoryBean;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -41,12 +46,26 @@ public class CayenneConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public CayenneRuntime cayenneServerRuntime(DataSource dataSource,
-                                               CayenneProperties props) {
+                                               CayenneProperties props,
+                                               ObjectProvider<List<CayenneRuntimeCustomizer>> cayenneCustomizers,
+                                               ObjectProvider<List<Module>> cayenneModules) {
         log.info("Creating cayenne runtime, configuration: {}", props.getConfig());
-        return ServerRuntime.builder()
-                            .dataSource(dataSource)
-                            .addConfig(props.getConfig())
-                            .build();
+        ServerRuntimeBuilder builder =
+                ServerRuntime.builder()
+                             .dataSource(dataSource)
+                             .addConfig(props.getConfig());
+
+        List<Module> modules = cayenneModules.getIfAvailable();
+        if (!CollectionUtils.isEmpty(modules)) {
+            modules.forEach(builder::addModule);
+        }
+        List<CayenneRuntimeCustomizer> customizers = cayenneCustomizers.getIfAvailable();
+        if (!CollectionUtils.isEmpty(customizers)) {
+            for (CayenneRuntimeCustomizer c : customizers) {
+                c.customize(builder);
+            }
+        }
+        return builder.build();
     }
 
     @Bean
