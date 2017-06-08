@@ -1,7 +1,5 @@
 package com.softmotions.cayenne.spring.conf;
 
-import javax.servlet.ServletRequestEvent;
-import javax.servlet.ServletRequestListener;
 import javax.sql.DataSource;
 
 import org.apache.cayenne.ObjectContext;
@@ -19,8 +17,8 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import com.softmotions.cayenne.spring.tx.CayenneTransactionManager;
@@ -35,6 +33,7 @@ import com.softmotions.cayenne.utils.ExtBaseContext;
 @EnableConfigurationProperties(CayenneProperties.class)
 @ConditionalOnClass({ServerRuntime.class})
 @ConditionalOnProperty(prefix = "spring.cayenne", name = "config")
+@Import(CayenneWebConfiguration.class)
 public class CayenneConfiguration {
 
     private static final Logger log = LoggerFactory.getLogger(CayenneConfiguration.class);
@@ -84,36 +83,5 @@ public class CayenneConfiguration {
                 return false;
             }
         };
-    }
-
-    @Service
-    static class CayenneServletRequestListener implements ServletRequestListener {
-
-        CayenneServletRequestListener() {
-            log.info("CayenneServletRequestListener instantiated");
-        }
-
-        @Override
-        public void requestInitialized(ServletRequestEvent sre) {
-        }
-
-        @Override
-        public void requestDestroyed(ServletRequestEvent sre) {
-            ObjectContext octx = ExtBaseContext.getThreadObjectContextNull();
-            if (octx != null) {
-                disposeOctx(octx);
-                ExtBaseContext.bindThreadObjectContext(null);
-            }
-        }
-
-        private void disposeOctx(ObjectContext octx) {
-            if (octx.hasChanges()) {
-                try {
-                    octx.commitChanges();
-                } catch (Exception e) {
-                    log.error("", e);
-                }
-            }
-        }
     }
 }
