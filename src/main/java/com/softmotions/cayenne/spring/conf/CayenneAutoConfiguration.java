@@ -22,7 +22,6 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 import org.springframework.transaction.PlatformTransactionManager;
 
@@ -38,10 +37,9 @@ import com.softmotions.cayenne.utils.ExtBaseContext;
 @EnableConfigurationProperties(CayenneProperties.class)
 @ConditionalOnClass({ServerRuntime.class})
 @ConditionalOnProperty(prefix = "spring.cayenne", name = "config")
-@Import(CayenneWebConfiguration.class)
-public class CayenneConfiguration {
+public class CayenneAutoConfiguration {
 
-    private static final Logger log = LoggerFactory.getLogger(CayenneConfiguration.class);
+    private static final Logger log = LoggerFactory.getLogger(CayenneAutoConfiguration.class);
 
     @Bean
     @ConditionalOnMissingBean

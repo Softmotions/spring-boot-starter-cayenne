@@ -1,3 +1,4 @@
 # Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.softmotions.cayenne.spring.conf.CayenneConfiguration
+com.softmotions.cayenne.spring.conf.CayenneAutoConfiguration,\
+com.softmotions.cayenne.spring.conf.CayenneWebAutoConfiguration
