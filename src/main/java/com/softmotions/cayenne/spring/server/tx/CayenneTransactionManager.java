@@ -1,4 +1,4 @@
-package com.softmotions.cayenne.spring.tx;
+package com.softmotions.cayenne.spring.server.tx;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -321,5 +321,4 @@ public class CayenneTransactionManager
             super.setTransactionActive(transactionActive);
         }
     }
-
 }

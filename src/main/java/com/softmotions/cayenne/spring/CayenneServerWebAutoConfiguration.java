@@ -1,4 +1,4 @@
-package com.softmotions.cayenne.spring.conf;
+package com.softmotions.cayenne.spring;
 
 import javax.servlet.ServletRequestEvent;
 import javax.servlet.ServletRequestListener;
@@ -19,11 +19,11 @@ import com.softmotions.cayenne.utils.ExtBaseContext;
  */
 @Configuration
 @ConditionalOnClass({ServletRequestListener.class})
-@ConditionalOnProperty(prefix = "spring.data.cayenne", name = "config")
+@ConditionalOnProperty(prefix = "spring.data.cayenne.server", name = "config")
 @AutoConfigureAfter(CayenneAutoConfiguration.class)
-public class CayenneWebAutoConfiguration {
+public class CayenneServerWebAutoConfiguration {
 
-    private static final Logger log = LoggerFactory.getLogger(CayenneWebAutoConfiguration.class);
+    private static final Logger log = LoggerFactory.getLogger(CayenneServerWebAutoConfiguration.class);
 
     @Bean
     ServletRequestListener cayenneServletRequestListener() {
