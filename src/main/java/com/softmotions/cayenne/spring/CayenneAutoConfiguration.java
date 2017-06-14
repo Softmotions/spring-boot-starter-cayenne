@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServlet;
 import javax.sql.DataSource;
 
 import org.apache.cayenne.ObjectContext;
+import org.apache.cayenne.configuration.rop.client.ClientRuntime;
+import org.apache.cayenne.configuration.rop.client.ClientRuntimeBuilder;
 import org.apache.cayenne.configuration.rop.server.ROPServerModule;
 import org.apache.cayenne.configuration.server.ServerRuntime;
 import org.apache.cayenne.configuration.server.ServerRuntimeBuilder;
@@ -38,22 +40,32 @@ import com.softmotions.cayenne.utils.ExtBaseContext;
  */
 @SpringBootConfiguration
 @ComponentScan("com.softmotions.cayenne.spring")
-@EnableConfigurationProperties(CayenneServerProperties.class)
 @AutoConfigureAfter(DataSourceAutoConfiguration.class)
+@SuppressWarnings("UtilityClassWithoutPrivateConstructor")
 public class CayenneAutoConfiguration {
 
     private static final Logger log = LoggerFactory.getLogger(CayenneAutoConfiguration.class);
 
     @Configuration
-    public static class CayenneClientAutoConfiguration {
-        // todo
+    @EnableConfigurationProperties(CayenneClientProperties.class)
+    @ConditionalOnClass(ClientRuntimeBuilder.class)
+    protected static class CayenneClientAutoConfiguration {
+
+        @Bean
+        public ClientRuntime cayenneClientRuntime(CayenneClientProperties props) {
+            log.info("Creating the client cayenne runtime: {}", props);
+            ClientRuntimeBuilder crb = ClientRuntime.builder();
+            crb.properties(props.getProps());
+            return crb.build();
+        }
+
     }
 
     @Configuration
     @ConditionalOnProperty(prefix = "spring.cayenne.server", name = "config")
     @ConditionalOnClass(ServerRuntime.class)
     @EnableConfigurationProperties(CayenneServerProperties.class)
-    static class CayenneServerAutoConfiguration {
+    protected static class CayenneServerAutoConfiguration {
 
         @Bean
         @ConditionalOnMissingBean
@@ -61,7 +73,7 @@ public class CayenneAutoConfiguration {
                                                   CayenneServerProperties props,
                                                   ObjectProvider<List<CayenneServerRuntimeCustomizer>> cayenneCustomizers,
                                                   ObjectProvider<List<Module>> cayenneModules) {
-            log.info("Creating cayenne runtime, configuration: {}", props.getConfig());
+            log.info("Creating the server cayenne runtime, configuration: {}", props.getConfig());
             ServerRuntimeBuilder builder =
                     ServerRuntime.builder()
                                  .dataSource(dataSource)
@@ -132,8 +144,8 @@ public class CayenneAutoConfiguration {
         }
 
         @Bean
-        ServletRegistrationBean ropServletRegistration(ServerRuntime srt,
-                                                       CayenneServerProperties cfg) {
+        public ServletRegistrationBean cayenneROPServletRegistration(ServerRuntime srt,
+                                                                     CayenneServerProperties cfg) {
             return new ServletRegistrationBean(
                     new CayenneServerRopServlet(srt, cfg),
                     cfg.getRop().getEndpoint()

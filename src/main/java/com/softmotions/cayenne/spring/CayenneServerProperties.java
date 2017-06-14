@@ -1,5 +1,6 @@
 package com.softmotions.cayenne.spring;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +14,7 @@ import org.springframework.validation.annotation.Validated;
  */
 @ConfigurationProperties(prefix = "spring.cayenne.server")
 @Validated
-public class CayenneServerProperties implements InitializingBean {
+public class CayenneServerProperties implements InitializingBean, Serializable {
 
     @NotEmpty
     private String config;
