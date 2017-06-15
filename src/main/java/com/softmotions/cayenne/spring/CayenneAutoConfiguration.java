@@ -48,6 +48,7 @@ public class CayenneAutoConfiguration {
 
     @Configuration
     @EnableConfigurationProperties(CayenneClientProperties.class)
+    @ConditionalOnProperty(prefix = "spring.cayenne.client", name = "url")
     @ConditionalOnClass(ClientRuntimeBuilder.class)
     protected static class CayenneClientAutoConfiguration {
 
