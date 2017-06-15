@@ -1,4 +1,4 @@
-package com.softmotions.cayenne;
+package com.softmotions.cayenne.server;
 
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;

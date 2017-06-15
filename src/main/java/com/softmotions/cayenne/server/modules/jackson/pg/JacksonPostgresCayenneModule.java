@@ -1,4 +1,4 @@
-package com.softmotions.cayenne.modules.jackson.pg;
+package com.softmotions.cayenne.server.modules.jackson.pg;
 
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
