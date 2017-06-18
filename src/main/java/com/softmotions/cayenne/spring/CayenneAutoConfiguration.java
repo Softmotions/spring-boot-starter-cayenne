@@ -140,6 +140,7 @@ public class CayenneAutoConfiguration {
         public CayenneServerRuntimeCustomizer cayenneRopCustomizer(CayenneServerProperties props) {
             CayenneServerProperties.Rop rop = props.getRop();
             return builder -> {
+                log.info("Registering ROPServerModule module");
                 builder.addModule(new ROPServerModule(rop.getProps()));
             };
         }
@@ -147,6 +148,7 @@ public class CayenneAutoConfiguration {
         @Bean
         public ServletRegistrationBean cayenneROPServletRegistration(ServerRuntime srt,
                                                                      CayenneServerProperties cfg) {
+            log.info("Registering cayenne ROP servlet at: {}", cfg.getRop().getEndpoint());
             return new ServletRegistrationBean(
                     new CayenneServerRopServlet(srt, cfg),
                     cfg.getRop().getEndpoint()
