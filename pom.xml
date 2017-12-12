@@ -18,15 +18,15 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.source.version>1.8</java.source.version>
-        <cayenne.version>4.0.B1</cayenne.version>
-        <spring.boot.version>1.5.3.RELEASE</spring.boot.version>
-        <spring.web.version>4.3.8.RELEASE</spring.web.version>
-        <testng.version>6.11</testng.version>
+        <cayenne.version>4.0.B2</cayenne.version>
+        <spring.boot.version>1.5.9.RELEASE</spring.boot.version>
+        <spring.web.version>4.3.13.RELEASE</spring.web.version>
+        <testng.version>6.13.1</testng.version>
         <commons-beanutils.version>1.9.3</commons-beanutils.version>
         <hibernate-validator.version>5.4.1.Final</hibernate-validator.version>
-        <jackson.version>2.8.8</jackson.version>
-        <commons-lang.version>3.5</commons-lang.version>
-        <postgresql.version>42.0.0.jre7</postgresql.version>
+        <jackson.version>2.9.3</jackson.version>
+        <commons-lang.version>3.7</commons-lang.version>
+        <postgresql.version>42.1.4.jre7</postgresql.version>
     </properties>
 
     <dependencies>
@@ -119,7 +119,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.6.1</version>
+                <version>3.7.0</version>
                 <configuration>
                     <source>${java.source.version}</source>
                     <target>${java.source.version}</target>
