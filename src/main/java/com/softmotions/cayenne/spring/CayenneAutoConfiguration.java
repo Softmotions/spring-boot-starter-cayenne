@@ -102,6 +102,7 @@ public class CayenneAutoConfiguration {
         }
 
         @Bean
+        @Primary
         @ConditionalOnMissingBean
         public FactoryBean<ObjectContext> cayenneObjectContext(ServerRuntime cayenneRuntime) {
             return new FactoryBean<ObjectContext>() {
