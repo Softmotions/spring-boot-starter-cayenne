@@ -24,7 +24,7 @@
         <testng.version>6.13.1</testng.version>
         <commons-beanutils.version>1.9.3</commons-beanutils.version>
         <hibernate-validator.version>5.4.1.Final</hibernate-validator.version>
-        <jackson.version>2.9.9</jackson.version>
+        <jackson.version>2.10.0</jackson.version>
         <commons-lang.version>3.9</commons-lang.version>
         <postgresql.version>42.2.6.jre7</postgresql.version>
     </properties>
