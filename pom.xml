@@ -20,7 +20,7 @@
         <java.source.version>1.8</java.source.version>
         <cayenne.version>4.1.B2</cayenne.version>
         <spring.boot.version>2.1.6.RELEASE</spring.boot.version>
-        <spring.web.version>5.1.8.RELEASE</spring.web.version>
+        <spring.web.version>6.0.0</spring.web.version>
         <testng.version>6.13.1</testng.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <hibernate-validator.version>5.4.2.Final</hibernate-validator.version>
